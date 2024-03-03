@@ -10,8 +10,16 @@ class P2PHandler:
         self.key_path = key_path
         self.topic = topic
 
+    async def generate_or_load_key(self):
+        """Generate or load the node keypair."""
+        try:
+            libp2p.generate_ed25519_keypair(self.key_path)
+        except FileExistsError:
+            pass
+
     async def init_network(self):
         """Initialize the P2P network."""
+        await self.generate_or_load_key()
         await libp2p.init_global_p2p_network(self.bootnodes, 0, self.key_path, self.topic)
 
     async def publish_weights(self, model):

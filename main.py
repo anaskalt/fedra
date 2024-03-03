@@ -1,5 +1,6 @@
 # main.py
 import asyncio
+import torch
 from models.net import Net
 from utils.data_loader import load_data
 from p2p.p2p_handler import P2PHandler
