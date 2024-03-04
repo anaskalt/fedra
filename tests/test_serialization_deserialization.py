@@ -7,9 +7,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from models.net import Net
 from utils.data_loader import DataLoaderHandler
-from utils.weight_utils import serialize_model_weights, deserialize_model_weights
+from utils.weight_utils import WeightManager
 
-class TestWeightUtils(unittest.TestCase):
+class TestSerializationDeserialization(unittest.TestCase):
 
     def setUp(self):
         print("Setting up the test environment...")
@@ -27,15 +27,19 @@ class TestWeightUtils(unittest.TestCase):
         net = Net(input_dim=self.input_dim).to(self.DEVICE)
         print("Training model...")
         self.data_loader_handler.train(net=net, trainloader=trainloader, epochs=self.epochs, device=self.DEVICE)
-        print("Serializing model weights...")
+
+        print("Creating WeightManager and serializing model weights...")
+        weight_manager = WeightManager(net)
         original_state_dict = net.state_dict()
 
         # Serialize and chunk the model weights
-        serialized_weights = serialize_model_weights(net, self.chunk_size)
+        serialized_weights = weight_manager.serialize_weights(self.chunk_size)
+        #serialized_weights = serialize_model_weights(net, self.chunk_size)
 
         print("Deserializing model weights...")
         # Deserialize the weights and load back into the model
-        deserialized_model = deserialize_model_weights(serialized_weights, net)
+        deserialized_model = weight_manager.deserialize_weights(serialized_weights)
+        #deserialized_model = deserialize_model_weights(serialized_weights, net)
         deserialized_state_dict = deserialized_model.state_dict()
 
         #print("Saving original and deserialized state dictionaries...")
