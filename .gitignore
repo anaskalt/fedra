@@ -117,5 +117,9 @@ dmypy.json
 
 # Others
 node.key
-config/
-data/cell_data.csv
+
+# Ignore .DS_Store files
+.DS_Store
+
+# Ignore the entire metrics directory
+/metrics/
