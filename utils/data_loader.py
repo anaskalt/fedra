@@ -58,7 +58,7 @@ class DataLoaderHandler:
 
     def train(self, net: Net, trainloader: DataLoader, epochs: int, device: torch.device) -> float:
         criterion = nn.BCELoss()
-        optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
+        optimizer = torch.optim.Adam(net.parameters(), lr=0.001) # learning rate to be configurable
         net.to(device)
         net.train()
         

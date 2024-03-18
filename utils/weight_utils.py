@@ -23,7 +23,7 @@ class WeightManager:
         buffer = io.BytesIO(weights_bytes)
         state_dict = torch.load(buffer)
         self.model.load_state_dict(state_dict)
-        return self.model 
+        return self.model
 
     '''def average_weights(self, list_of_weights):
         """Average weights using the Federated Averaging (FedAvg) technique."""
@@ -47,7 +47,7 @@ class WeightManager:
         self.model.load_state_dict(average_weights)
         return self.model'''
 
-    @staticmethod
+    '''@staticmethod
     def average_weights(state_dicts, num_data_points=None):
         """Average multiple state dictionaries using FedAvg technique."""
         avg_state_dict = {}
@@ -56,6 +56,23 @@ class WeightManager:
         for key in state_dicts[0]:
             # Compute weighted sum of the weights for each key
             weighted_sum = sum(state_dict[key] * (n / total_data_points) for state_dict, n in zip(state_dicts, num_data_points))
+            avg_state_dict[key] = weighted_sum
+
+        return avg_state_dict'''
+
+    @staticmethod
+    def average_weights(state_dicts, num_data_points=None):
+        """Average multiple state dictionaries using FedAvg technique."""
+        avg_state_dict = {}
+        total_data_points = sum(num_data_points) if num_data_points else len(state_dicts)
+
+        for key in state_dicts[0]:
+            if num_data_points:
+                # Compute weighted sum of the weights for each key
+                weighted_sum = sum(state_dict[key] * (n / total_data_points) for state_dict, n in zip(state_dicts, num_data_points))
+            else:
+                # Simple average if num_data_points is None
+                weighted_sum = sum(state_dict[key] for state_dict in state_dicts) / len(state_dicts)
             avg_state_dict[key] = weighted_sum
 
         return avg_state_dict
