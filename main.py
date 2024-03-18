@@ -12,7 +12,7 @@ from utils.weight_utils import WeightManager
 async def main():
     # Load configuration
     config = configparser.ConfigParser()
-    config.read('config/node.conf')
+    config.read('conf/node.conf')
     print("Configuration loaded.")
 
     # Initialize and train the model
