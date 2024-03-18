@@ -123,3 +123,5 @@ node.key
 
 # Ignore the entire metrics directory
 /metrics/
+
+.vscode/
