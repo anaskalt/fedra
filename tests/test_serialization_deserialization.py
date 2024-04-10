@@ -5,9 +5,9 @@ import unittest
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from models.net import Net
-from utils.data_loader import DataLoaderHandler
-from utils.weight_utils import WeightManager
+from anomaly_dfl.models.simple_nn_classification import Net
+from anomaly_dfl.utils.process import DataLoaderHandler
+from anomaly_dfl.utils.operations import WeightManager
 
 class TestSerializationDeserialization(unittest.TestCase):
 
