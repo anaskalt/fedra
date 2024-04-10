@@ -4,10 +4,13 @@ import sys
 
 sys.path.insert(0,"../")
 
+import os
 import time
 import asyncio
 import torch
 import configparser
+import matplotlib.pyplot as plt
+
 from anomaly_dfl.models.simple_nn_classification import Net
 from anomaly_dfl.utils.process import DataLoaderHandler
 from anomaly_dfl.utils.state import Status
@@ -17,6 +20,9 @@ from anomaly_dfl.utils.operations import Operations
 ### For debug purposes
 ATTEMPTS = 3
 torch.autograd.set_detect_anomaly(True)
+# Ensure the metrics directory exists
+METRICS_DIR = '../metrics'
+os.makedirs(METRICS_DIR, exist_ok=True)
 
 # Load configuration
 def load_configuration():
@@ -53,8 +59,8 @@ async def setup_p2p_network(config):
     return p2p_handler
 
 async def perform_federated_averaging(p2p_handler, net, DEVICE):
-    if  p2p_handler.network_state.check_state(Status.READY):
-
+    if p2p_handler.network_state.check_state(Status.READY, Status.EXITED):
+    #if  p2p_handler.network_state.check_state(Status.READY):
         averaged_weights = Operations.average_weights(p2p_handler.network_state)
 
         # Load the averaged weights into the model
@@ -73,12 +79,17 @@ async def perform_federated_averaging(p2p_handler, net, DEVICE):
         print("Not all peers are ready for federated averaging.")
 
 async def train_and_sync(p2p_handler, net, rounds, data_loader_handler, epochs, DEVICE, avg_timeout):
+
+    training_losses = []
+    testing_losses = []
+
     for round in range(rounds):
         print(f"Round {round + 1}/{rounds}")
 
         # 1. Training
-        train_loader, _ = data_loader_handler.load_data()
-
+        #train_loader, _ = data_loader_handler.load_data()
+        train_loader, test_loader = data_loader_handler.load_data()
+        # Update status to TRAINING
         p2p_handler.local_peer_status.status = Status.TRAINING
         p2p_handler.network_state.update_peer_status(p2p_handler.local_peer_status)
 
@@ -86,9 +97,15 @@ async def train_and_sync(p2p_handler, net, rounds, data_loader_handler, epochs, 
             await p2p_handler.publish_status(p2p_handler.local_peer_status)
         await asyncio.sleep(10)
 
-        data_loader_handler.train(net, train_loader, epochs, DEVICE)
-        #data_loader_handler.train_model(net, train_loader, DEVICE)
+        # Perform training and record loss
+        training_loss = data_loader_handler.train(net, train_loader, epochs, DEVICE)
+        training_losses.append(training_loss)
         print("Model training complete.")
+
+        # Testing and recording test loss
+        test_loss, _ = data_loader_handler.test(net, test_loader, DEVICE)
+        testing_losses.append(test_loss)
+        print("Model evaluation complete.")
 
         # 2. Publish the trained model's weights
         p2p_handler.local_peer_weights.weights = net.state_dict()
@@ -112,7 +129,8 @@ async def train_and_sync(p2p_handler, net, rounds, data_loader_handler, epochs, 
 
         # 4. Wait for all peers to become READY before proceeding with federated averaging
         ready_wait_start = time.time()
-        while not p2p_handler.network_state.check_state(Status.READY):
+        while not p2p_handler.network_state.check_state(Status.READY, Status.EXITED):
+        #while not p2p_handler.network_state.check_state(Status.READY):
             await asyncio.sleep(2)
             if time.time() - ready_wait_start > avg_timeout:
                 print("Timeout reached, proceeding with federated averaging.")
@@ -122,6 +140,22 @@ async def train_and_sync(p2p_handler, net, rounds, data_loader_handler, epochs, 
         await perform_federated_averaging(p2p_handler, net, DEVICE)
 
         print(f"Round {round + 1} completed.")
+
+    # After all rounds are complete, plot and save the training and testing losses
+    plt.figure(figsize=(10, 5))
+    plt.plot(training_losses, label='Training Loss')
+    plt.plot(testing_losses, label='Testing Loss')
+    plt.title('Training and Testing Losses per Round')
+    plt.xlabel('Round')
+    plt.ylabel('Loss')
+    plt.legend()
+
+    loss_plot_filename = f'{METRICS_DIR}/losses_per_round_{p2p_handler.local_peer_status.peer_id}.png'
+
+    plt.savefig(loss_plot_filename)
+    #plt.show()
+
+    print(f"Losses plot saved as {loss_plot_filename}.")
 
     p2p_handler.local_peer_status.status = Status.EXITED
     p2p_handler.network_state.update_peer_status(p2p_handler.local_peer_status)
@@ -166,16 +200,12 @@ async def main():
 
     await asyncio.sleep(10)
 
-    # At the end, get and print the network summary
-    #network_summary = p2p_handler.network_state.get_network_summary()
-    #print("Network Summary:", network_summary)
-
     # Training and synchronization loop
     await train_and_sync(p2p_handler, net, rounds, data_loader_handler, epochs, DEVICE, avg_timeout)
 
-    # Keep the script running to listen for incoming messages
-    #while True:
-        #await asyncio.sleep(10)
+    #Keep the script running to listen for incoming messages
+    while True:
+        await asyncio.sleep(10)
 
 if __name__ == "__main__":
     asyncio.run(main())

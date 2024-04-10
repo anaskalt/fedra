@@ -2,4 +2,5 @@ torch
 numpy
 pandas
 scikit-learn
+matplotlib
 #libp2p-pyrust

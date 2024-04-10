@@ -112,9 +112,20 @@ class NetworkState:
         self.peer_statuses.clear()
         self.peer_weights.clear()
 
-    def check_state(self, state: Status) -> bool:
+    '''def check_state(self, state: Status) -> bool:
         """Checks if all peers are in the specified state."""
-        return all(status == state for status in self.peer_statuses.values())
+        return all(status == state for status in self.peer_statuses.values())'''
+
+    def check_state(self, *states) -> bool:
+        """Checks if all peers are in any of the specified states.
+        
+        Args:
+            *states (Status): Variable number of state arguments to check against.
+        
+        Returns:
+            bool: True if all peers are in any of the specified states, False otherwise.
+        """
+        return all(status in states for status in self.peer_statuses.values())
 
     def get_all_weights(self) -> dict:
         """Returns the weights of all peers."""
