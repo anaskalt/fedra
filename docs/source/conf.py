@@ -28,7 +28,7 @@ sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # -- Project information -----------------------------------------------------
 
-project = 'anomaly-dfl'
+project = 'fedra'
 copyright = '2024, Anastasios Kaltakis'
 author = 'Anastasios Kaltakis'
 
