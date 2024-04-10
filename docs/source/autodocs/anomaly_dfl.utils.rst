@@ -4,18 +4,26 @@ anomaly\_dfl.utils package
 Submodules
 ----------
 
-anomaly\_dfl.utils.data\_loader module
---------------------------------------
+anomaly\_dfl.utils.operations module
+------------------------------------
 
-.. automodule:: anomaly_dfl.utils.data_loader
+.. automodule:: anomaly_dfl.utils.operations
    :members:
    :undoc-members:
    :show-inheritance:
 
-anomaly\_dfl.utils.weight\_utils module
----------------------------------------
+anomaly\_dfl.utils.process module
+---------------------------------
 
-.. automodule:: anomaly_dfl.utils.weight_utils
+.. automodule:: anomaly_dfl.utils.process
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+anomaly\_dfl.utils.state module
+-------------------------------
+
+.. automodule:: anomaly_dfl.utils.state
    :members:
    :undoc-members:
    :show-inheritance:

@@ -3,7 +3,7 @@
    directive.
 
 anomaly-dfl documentation
-========================
+=========================
 
 :Release: |version|
 :Date: |today|

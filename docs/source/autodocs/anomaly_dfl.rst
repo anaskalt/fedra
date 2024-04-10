@@ -8,7 +8,7 @@ Subpackages
    :maxdepth: 4
 
    anomaly_dfl.models
-   anomaly_dfl.p2p
+   anomaly_dfl.network
    anomaly_dfl.utils
 
 Submodules

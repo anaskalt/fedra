@@ -225,8 +225,10 @@ class P2PHandler:
         Args:
             min_peers (int): The minimum number of peers required to proceed.
             check_interval (int): The interval, in seconds, between checks for connected peers.
-        Continuously checks for the number of connected peers and updates their statuses.
-        Proceeds once the minimum number of peers is connected.
+
+        Notes:
+            - Continuously checks for the number of connected peers and updates their statuses.
+            - Proceeds once the minimum number of peers is connected.
         """
         print(f"Waiting for at least {min_peers} peers to connect...")
         while True:

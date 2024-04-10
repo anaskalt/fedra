@@ -120,7 +120,7 @@ class NetworkState:
         """Checks if all peers are in any of the specified states.
         
         Args:
-            *states (Status): Variable number of state arguments to check against.
+            \*states (Status): Variable number of state arguments to check against.
         
         Returns:
             bool: True if all peers are in any of the specified states, False otherwise.
