@@ -10,7 +10,7 @@ import torch
 import configparser
 from anomaly_dfl.models.simple_nn_classification import Net
 from anomaly_dfl.utils.process import DataLoaderHandler
-from anomaly_dfl.utils.state import Status, PeerStatus, PeerWeights
+from anomaly_dfl.utils.state import Status
 from anomaly_dfl.network.handler import P2PHandler
 from anomaly_dfl.utils.operations import Operations
 
@@ -54,17 +54,21 @@ async def setup_p2p_network(config):
 
 async def perform_federated_averaging(p2p_handler, net, DEVICE):
     if  p2p_handler.network_state.check_state(Status.READY):
-        all_weights = p2p_handler.network_state.get_all_weights()
+        #print(f"Type of network_state: {type(p2p_handler.network_state)}")
+        #print(f"Contents of network_state: {vars(p2p_handler.network_state)}")
+        #all_weights = p2p_handler.network_state.get_all_weights()
 
         # Assuming Operations.average_weights method exists and works with your data
-        averaged_weights = Operations.average_weights(list(all_weights.values()))
+        #averaged_weights = Operations.average_weights(list(all_weights.values()))
+        averaged_weights = Operations.average_weights(p2p_handler.network_state)
+
 
         # Load the averaged weights into the model
         net.load_state_dict(averaged_weights)
         net.to(DEVICE)
 
         print("Federated averaging complete.")
-        p2p_handler.local_peer_status.status = Status.JOINED
+        p2p_handler.local_peer_status.status = Status.COMPLETED
         p2p_handler.network_state.update_peer_status(p2p_handler.local_peer_status)
 
         for _ in range(ATTEMPTS):
@@ -125,9 +129,9 @@ async def train_and_sync(p2p_handler, net, rounds, data_loader_handler, epochs, 
 
         print(f"Round {round + 1} completed.")
 
-    p2p_handler.local_peer_status.status = Status.COMPLETED
+    p2p_handler.local_peer_status.status = Status.EXITED
     p2p_handler.network_state.update_peer_status(p2p_handler.local_peer_status)
-    print("Training and synchronization complete. Status updated to COMPLETED.")
+    print("Training and synchronization complete. Status updated to EXITED.")
     for _ in range(ATTEMPTS):
         await p2p_handler.publish_status(p2p_handler.local_peer_status)
     await asyncio.sleep(10)
@@ -146,7 +150,7 @@ async def main():
     await p2p_handler.init_network()
 
     # Wait for a minimum number of peers to be connected
-    await p2p_handler.wait_for_peers(min_peers=4, check_interval=check_interval)
+    await p2p_handler.wait_for_peers(min_peers=1, check_interval=check_interval)
 
     net, DEVICE = initialize_model(config)
 
@@ -176,8 +180,8 @@ async def main():
     await train_and_sync(p2p_handler, net, rounds, data_loader_handler, epochs, DEVICE, avg_timeout)
 
     # Keep the script running to listen for incoming messages
-    while True:
-        await asyncio.sleep(10)
+    #while True:
+        #await asyncio.sleep(10)
 
 if __name__ == "__main__":
     asyncio.run(main())

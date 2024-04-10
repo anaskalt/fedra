@@ -2,6 +2,9 @@ import torch
 import pickle
 from typing import List, Dict, Union
 from anomaly_dfl.utils.state import PeerStatus, PeerWeights, NetworkState
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Operations:
     """
@@ -36,8 +39,11 @@ class Operations:
             List[bytes]: The serialized data as a list of bytes, chunked if specified.
         """
         serialized_data = pickle.dumps(data_object)
+        logging.debug(f"Serialized data size: {len(serialized_data)} bytes")
         if self.chunk_size is not None:
-            return [serialized_data[i:i + self.chunk_size] for i in range(0, len(serialized_data), self.chunk_size)]
+            chunks = [serialized_data[i:i + self.chunk_size] for i in range(0, len(serialized_data), self.chunk_size)]
+            logging.debug(f"Data chunked into {len(chunks)} parts")
+            return chunks
         else:
             return [serialized_data]
 
@@ -52,7 +58,11 @@ class Operations:
             Union[PeerWeights, PeerStatus]: The deserialized data object.
         """
         data_bytes = b''.join(serialized_data)
-        return pickle.loads(data_bytes)
+        logging.debug(f"Deserializing data of size: {len(data_bytes)} bytes")
+        
+        deserialized_data = pickle.loads(data_bytes)
+        logging.debug(f"Deserialized data type: {type(deserialized_data)}")
+        return deserialized_data
 
     @staticmethod
     def average_weights(network_state: NetworkState) -> Dict[str, torch.Tensor]:

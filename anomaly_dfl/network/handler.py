@@ -116,7 +116,7 @@ class P2PHandler:
         serialized_data = operations.serialize(peer_weights)
         await self.publish_objects(serialized_data)
 
-    async def publish_objects(self, serialized_data: List[bytes], delay: float = 0.01):
+    async def publish_objects(self, serialized_data: List[bytes], delay: float = 0.1):
         """
         Publishes serialized data objects (PeerWeights or PeerStatus) to the P2P network.
 
@@ -160,11 +160,11 @@ class P2PHandler:
         """
         if message == b'start':
             self.message_buffer.clear()
-            self.receiving = True
-        elif message == b'end' and self.receiving:
+            self.is_receiving = True
+        elif message == b'end' and self.is_receiving:
             self.process_complete_message()
-            self.receiving = False
-        elif self.receiving:
+            self.is_receiving = False
+        elif self.is_receiving:
             self.message_buffer.extend(message)
 
     def process_complete_message(self):

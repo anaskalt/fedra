@@ -1,6 +1,7 @@
-==================
+=====================================================
 Anomaly Detection Federated Learning (anomaly-dfl) v1
-==================
+=====================================================
+
 
 General Description
 ===================
@@ -44,10 +45,10 @@ Repository Structure
 
 The **anomaly-dfl** project is structured as follows:
 
-- `main.py`: Entry point for the federated learning process.
-- `models/`: Contains the neural network models.
-- `p2p/`: Implements the P2P communication for model sharing.
-- `utils/`: Provides utility functions for data loading and weight manipulation.
+- `anomaly-dfl/main.py`: Entry point for the federated learning process.
+- `anomaly-dfl/models/`: Contains the neural network models.
+- `anomaly-dfl/network/`: Implements the P2P communication.
+- `anomaly-dfl/utils/`: Provides utility functions for data loading and weight manipulation.
 - `data/`: Hosts the dataset used for training.
 - `tests/`: Contains unit tests for various components of the project.
 - `docs/`: Documentation for the project.
@@ -77,3 +78,8 @@ Contributing
 ============
 
 Contributions to **anomaly-dfl** are welcome! Please refer to the `CONTRIBUTING.md` file for guidelines on how to contribute to this project.
+
+About the Author
+================
+
+Developed by Anastasios Kaltakis, **anomaly-dfl** reflects a dedication to advancing the field of federated learning with a focus on privacy-preserving techniques. With extensive experience in machine learning and software development, Anastasios has committed to creating a framework that empowers users to collaborate on machine learning tasks while maintaining the privacy of their data.
