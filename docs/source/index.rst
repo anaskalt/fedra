@@ -2,8 +2,8 @@
    but it should at least contain the root `toctree`
    directive.
 
-anomaly-dfl documentation
-=========================
+fedra documentation
+===================
 
 :Release: |version|
 :Date: |today|

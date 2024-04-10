@@ -32,8 +32,8 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import asyncio
-from anomaly_dfl.network.handler import P2PHandler
-from anomaly_dfl.utils.state import Status
+from fedra.network.handler import P2PHandler
+from fedra.utils.state import Status
 import torch
 
 # Configuration values for the P2P network

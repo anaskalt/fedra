@@ -18,8 +18,8 @@ Example:
 from typing import List
 import asyncio
 import libp2p_pyrust as libp2p
-from anomaly_dfl.utils.operations import Operations
-from anomaly_dfl.utils.state import Status, PeerStatus, PeerWeights, NetworkState
+from fedra.utils.operations import Operations
+from fedra.utils.state import Status, PeerStatus, PeerWeights, NetworkState
 
 
 

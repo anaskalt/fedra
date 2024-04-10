@@ -11,11 +11,11 @@ import torch
 import configparser
 import matplotlib.pyplot as plt
 
-from anomaly_dfl.models.simple_nn_classification import Net
-from anomaly_dfl.utils.process import DataLoaderHandler
-from anomaly_dfl.utils.state import Status
-from anomaly_dfl.network.handler import P2PHandler
-from anomaly_dfl.utils.operations import Operations
+from fedra.models.simple_nn_classification import Net
+from fedra.utils.process import DataLoaderHandler
+from fedra.utils.state import Status
+from fedra.network.handler import P2PHandler
+from fedra.utils.operations import Operations
 
 ### For debug purposes
 ATTEMPTS = 3

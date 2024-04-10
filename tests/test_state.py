@@ -8,7 +8,7 @@ import os
 # Adjust the path if necessary
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from anomaly_dfl.utils.state import Status, PeerStatus, PeerWeights, NetworkState
+from fedra.utils.state import Status, PeerStatus, PeerWeights, NetworkState
 
 def setup_test_peers():
     peer_status_1 = PeerStatus("peer1", Status.JOINED)
