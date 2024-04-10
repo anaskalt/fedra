@@ -24,7 +24,7 @@ from sklearn.model_selection import train_test_split
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
-from anomaly_dfl.models.simple_nn_classification import Net
+from fedra.models.simple_nn_classification import Net
 
 class DataLoaderHandler:
     """

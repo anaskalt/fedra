@@ -5,8 +5,8 @@ import torch
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from anomaly_dfl.models.simple_nn_classification import Net
-from anomaly_dfl.utils.process import DataLoaderHandler
+from fedra.models.simple_nn_classification import Net
+from fedra.utils.process import DataLoaderHandler
 
 def test_model():
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")

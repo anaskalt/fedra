@@ -1,7 +1,7 @@
 import torch
 import pickle
 from typing import List, Dict, Union
-from anomaly_dfl.utils.state import PeerStatus, PeerWeights, NetworkState
+from fedra.utils.state import PeerStatus, PeerWeights, NetworkState
 import logging
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')

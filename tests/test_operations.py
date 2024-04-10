@@ -9,8 +9,8 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import torch
-from anomaly_dfl.utils.state import PeerWeights, NetworkState
-from anomaly_dfl.utils.operations import Operations
+from fedra.utils.state import PeerWeights, NetworkState
+from fedra.utils.operations import Operations
 
 def create_dummy_weights():
     """Creates dummy weights for simulation."""
