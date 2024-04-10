@@ -54,14 +54,8 @@ async def setup_p2p_network(config):
 
 async def perform_federated_averaging(p2p_handler, net, DEVICE):
     if  p2p_handler.network_state.check_state(Status.READY):
-        #print(f"Type of network_state: {type(p2p_handler.network_state)}")
-        #print(f"Contents of network_state: {vars(p2p_handler.network_state)}")
-        #all_weights = p2p_handler.network_state.get_all_weights()
 
-        # Assuming Operations.average_weights method exists and works with your data
-        #averaged_weights = Operations.average_weights(list(all_weights.values()))
         averaged_weights = Operations.average_weights(p2p_handler.network_state)
-
 
         # Load the averaged weights into the model
         net.load_state_dict(averaged_weights)
