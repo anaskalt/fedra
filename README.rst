@@ -32,7 +32,7 @@ Supported Models
 The framework is model-agnostic, allowing for the integration of various neural network models for anomaly detection. The default implementation includes a dense neural network specified in `models/net.py`, which can be easily replaced or extended based on the application requirements.
 
 Federated Learning Process
-=========================
+==========================
 
 1. **Initialization**: The global model is initialized, and configuration parameters are distributed to all participating nodes.
 2. **Local Training**: Each node trains the model locally with its dataset.
