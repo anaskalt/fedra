@@ -56,21 +56,19 @@ The **fedra** project is structured as follows:
 Generating Documentation
 ========================
 
-To produce the HTML documentation for **Fedra**, follow these steps within the `docs/` directory:
+To generate the documentation for **Fedra**, you first need to install the necessary dependencies:
 
-1. Install the necessary documentation requirements:
+.. code-block:: bash
 
-   .. code-block:: bash
+    pip3 install -r requirements.txt
 
-       pip3 install -r requirements.txt
+Once the dependencies are installed, you can compile the documentation using the following command:
 
-2. Use the `tox` command to generate the documentation:
+.. code-block:: bash
 
-   .. code-block:: bash
+    tox -e docs
 
-       tox -e docs
-
-The documentation will be compiled and made available in the `docs/_build/html/` directory.
+This will generate HTML documentation in the `docs/_build/html/` directory. Ensure that you have `tox` installed in your environment to use this command.
 
 Versioning
 ==========

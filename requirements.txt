@@ -1,3 +1,4 @@
+tox
 torch
 numpy
 pandas
