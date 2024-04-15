@@ -6,7 +6,7 @@ Fedra - Federated Learning Framework
 General Description
 ===================
 
-**fedra** is a federated learning framework designed for federated learning across distributed nodes. It leverages local data processing to train machine learning models on edge devices, aggregating the model updates in a central server while preserving data privacy. This project facilitates collaborative learning without sharing raw data, making it suitable for privacy-sensitive applications.
+**Fedra** is an innovative federated learning framework that enables decentralized training across distributed nodes. It leverages peer-to-peer (P2P) communication to facilitate model training on edge devices, allowing nodes to directly exchange model updates and perform local aggregation. This decentralized approach enhances privacy and security, as no raw data is shared and no central server is required. Fedra is particularly suitable for scenarios where data privacy is paramount.
 
 Table of Contents
 =================
@@ -19,12 +19,12 @@ Detailed Description
 Overview
 --------
 
-**fedra** operates by distributing the model training process across multiple nodes. Each node trains a local model based on its dataset and shares the model updates with a central aggregator. The aggregator then performs federated averaging to update the global model. This cycle repeats over several rounds until the model converges or a predetermined number of rounds is completed.
+**Fedra** revolutionizes federated learning by employing a decentralized model. Instead of relying on a central aggregator, each node independently trains a model on its data and engages in mutual exchange of model updates with other nodes. Local aggregation is then performed on each node, integrating insights from across the network to refine the model. This process iterates until the collective model converges or a specified number of rounds is complete.
 
 Configuration
 =============
 
-The configuration for **fedra** is straightforward, requiring only the setup of node-specific parameters and network configurations. Configuration can be achieved through a simple configuration file (`node.conf`), which specifies the model parameters, training rounds, and P2P network settings.
+Setting up **Fedra** is streamlined and user-friendly. The framework requires node-specific configurations, managed via a simple configuration file (`node.conf`). This file encapsulates essential parameters such as model details, training rounds, and P2P network settings, ensuring a seamless initiation into the federated learning process.
 
 Supported Models
 ================
@@ -36,9 +36,9 @@ Federated Learning Process
 
 1. **Initialization**: The global model is initialized, and configuration parameters are distributed to all participating nodes.
 2. **Local Training**: Each node trains the model locally with its dataset.
-3. **Model Update Sharing**: The nodes serialize their model updates and share them with the aggregator through a P2P network.
-4. **Federated Averaging**: The aggregator deserializes the received updates, performs federated averaging, and updates the global model.
-5. **Global Model Distribution**: The updated global model is then distributed back to the nodes for the next training round.
+3. **Model Update Exchange**: Post-training, nodes serialize and exchange model updates amongst themselves via P2P communication.
+4. **Local Aggregation**: Each node deserializes received updates and performs local federated averaging to refine their model.
+5. **Convergence and Repetition**: The iterative process continues, with each round of training and aggregation progressively enhancing the model's accuracy.
 
 Repository Structure
 ====================
@@ -56,13 +56,21 @@ The **fedra** project is structured as follows:
 Generating Documentation
 ========================
 
-Documentation can be generated using Sphinx. Navigate to the `docs/` directory and run:
+To produce the HTML documentation for **Fedra**, follow these steps within the `docs/` directory:
 
-.. code-block:: bash
+1. Install the necessary documentation requirements:
 
-    make html
+   .. code-block:: bash
 
-This will generate HTML documentation in the `docs/_build/html/` directory.
+       pip3 install -r requirements.txt
+
+2. Use the `tox` command to generate the documentation:
+
+   .. code-block:: bash
+
+       tox -e docs
+
+The documentation will be compiled and made available in the `docs/_build/html/` directory.
 
 Versioning
 ==========
