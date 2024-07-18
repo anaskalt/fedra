@@ -34,11 +34,12 @@ class P2PHandler:
         packet_size (int): The size of each packet for breaking down large messages, in bytes.
     """
 
-    def __init__(self, bootnodes, key_path, topic, packet_size=1024):
+    def __init__(self, bootnodes, key_path, topic, packet_size=1024, min_peers=1):
         self.bootnodes = bootnodes
         self.key_path = key_path
         self.topic = topic
         self.packet_size = packet_size
+        self.min_peers = min_peers
         self.local_peer_id = None
         self.local_peer_status = None
         self.local_peer_weights = None
@@ -218,7 +219,7 @@ class P2PHandler:
         """
         return await libp2p.get_peer_id()
 
-    async def wait_for_peers(self, min_peers=2, check_interval=5):
+    async def wait_for_peers(self, check_interval=5):
         """
         Waits for a minimum number of peers to be connected before proceeding.
 
@@ -230,10 +231,10 @@ class P2PHandler:
             - Continuously checks for the number of connected peers and updates their statuses.
             - Proceeds once the minimum number of peers is connected.
         """
-        print(f"Waiting for at least {min_peers} peers to connect...")
+        print(f"Waiting for at least {self.min_peers} peers to connect...")
         while True:
             current_peers = await self.get_peers()
-            if len(current_peers) >= min_peers:
+            if len(current_peers) >= self.min_peers:
                 print(f"Connected peers: {len(current_peers)}. Proceeding.")   
                 break
             else:
