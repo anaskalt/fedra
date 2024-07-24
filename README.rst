@@ -85,7 +85,7 @@ Contributing
 
 Contributions to **fedra** are welcome! Please refer to the `CONTRIBUTING.md` file for guidelines on how to contribute to this project.
 
-About the Author
+About the Project
 ================
 
-Developed by Anastasios Kaltakis, **fedra** reflects a dedication to advancing the field of federated learning with a focus on privacy-preserving techniques. With extensive experience in machine learning and software development, Anastasios has committed to creating a framework that empowers users to collaborate on machine learning tasks while maintaining the privacy of their data.
+This work was partially support by the "Trustworthy And Resilient Decentralised Intelligence For Edge Systems (TaRDIS)" Project, funded by EU HORIZON EUROPE program, under grant agreement No 101093006
