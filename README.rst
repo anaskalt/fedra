@@ -75,11 +75,6 @@ Versioning
 
 The current version of the project is maintained in the `VERSION` file. Ensure to update this file as the project evolves.
 
-License
-=======
-
-**fedra** is licensed under the MIT License. See the `LICENSE` file for more details.
-
 Contributing
 ============
 
@@ -89,3 +84,4 @@ About the Project
 ================
 
 This work was partially support by the "Trustworthy And Resilient Decentralised Intelligence For Edge Systems (TaRDIS)" Project, funded by EU HORIZON EUROPE program, under grant agreement No 101093006
+
